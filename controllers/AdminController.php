@@ -2,7 +2,9 @@
 //
 namespace Leap\Plugins\Admin\Controllers;
 
-class AdminController extends \Leap\Core\Controller
+use Leap\Core\Controller;
+
+class AdminController extends Controller
 {
     public function grantAccess()
     {
