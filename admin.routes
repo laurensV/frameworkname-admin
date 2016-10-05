@@ -9,3 +9,7 @@ scripts[] = scripts/menu.js
 
 [admin]
 page = pages/admin.php
+
+
+[admin/:p]
+page = pages/:p.php
