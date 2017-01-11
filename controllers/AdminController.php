@@ -6,9 +6,9 @@ use Leap\Core\Controller;
 
 class AdminController extends Controller
 {
-    public function grantAccess(): bool
+    public function hasAccess(): bool
     {
-        return true;
+        return false;
     }
 
     public function init()
