@@ -3,12 +3,14 @@
 namespace Leap\Plugins\Admin\Controllers;
 
 use Leap\Core\Controller;
+use Leap\Core\Template;
 
 class AdminController extends Controller
 {
+    protected $links;
     public function hasAccess(): bool
     {
-        return false;
+        return true;
     }
 
     public function init()
@@ -23,6 +25,20 @@ class AdminController extends Controller
 
         $this->hooks->fire("hook_adminLinks", array(&$links));
         ksort($links);
-        $this->set('links', $links);
+        $this->links = $links;
+    }
+
+    public function renderPage($parameters)
+    {
+        $template = new Template($this->route, $this->hooks, $this->config);
+        $template->set('links', $this->links);
+        if (isset($parameters['title'])) {
+            $template->set('title', $parameters['title']);
+        } else {
+            $tmp_page = explode("/", explode(".", $parameters['page'])[0]);
+            $template->set('title', ucfirst(end($tmp_page)));
+        }
+        $page = $parameters['page'] ?? null;
+        return $template->render($page);
     }
 }
