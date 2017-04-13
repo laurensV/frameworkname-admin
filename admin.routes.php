@@ -1,24 +1,34 @@
 <?php
+use Leap\Plugins\Admin\Controllers\AdminController;
+
 return [
-    'admin,admin/*' => [
-        'include_slash' => 'true',
-        'template'      => 'admin_template.php',
-        'controller'    => 'AdminController',
-        'stylesheets'   => [
-            'http://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.css',
-            'stylesheets/admin.less',
+    'GROUP admin' => [
+        '(/**)' => [
+            'abstract'   => true,
+            'parameters' => [
+                'stylesheets[]' => [
+                    'http://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.css',
+                    'url:stylesheets/admin.less'
+                ],
+                'scripts[]'     => [
+                    '//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.js',
+                    'url:scripts/menu.js'
+                ],
+            ]
         ],
-        'scripts[]'     => [
-            '//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.js',
-            'scripts/menu.js',
+
+        '' => [
+            'callback'   => AdminController::class . '@renderPage',
+            'parameters' => [
+                'page' => 'file:pages/admin.php',
+            ]
         ],
-    ],
 
-    'admin'         => [
-        'page' => 'pages/admin.php',
-    ],
-
-    'admin/:p' => [
-        'page' => 'pages/:p.php',
-    ],
+        '/{page}' => [
+            'callback'   => AdminController::class . '@renderPage',
+            'parameters' => [
+                'page' => 'file:pages/{page}.php'
+            ]
+        ]
+    ]
 ];
