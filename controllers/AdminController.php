@@ -8,7 +8,7 @@ class AdminController extends Controller
 {
     public function hasAccess(): bool
     {
-        return false;
+        return true;
     }
 
     public function init()
